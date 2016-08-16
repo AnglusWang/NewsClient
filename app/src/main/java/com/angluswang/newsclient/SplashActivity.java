@@ -1,6 +1,7 @@
 package com.angluswang.newsclient;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -54,7 +55,31 @@ public class SplashActivity extends Activity {
         set.addAnimation(scale);
         set.addAnimation(alpha);
 
+        // 设置动画监听（动画完毕后 进入向导页）
+        set.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) { // 动画结束
+                jumpNextPage();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
         rlRoot.startAnimation(set);
+
     }
 
+    // 跳转至向导页
+    private void jumpNextPage() {
+        startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+        finish();
+    }
 }
