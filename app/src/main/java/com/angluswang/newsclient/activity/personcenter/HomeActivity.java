@@ -1,18 +1,18 @@
-package com.angluswang.newsclient.activity;
+package com.angluswang.newsclient.activity.personcenter;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.angluswang.newsclient.R;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 /**
  * Created by AnglusWang on 2016/8/17.
  * 主页 活动界面
  */
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends SlidingFragmentActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 

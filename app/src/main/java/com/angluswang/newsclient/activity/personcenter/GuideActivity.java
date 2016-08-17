@@ -1,4 +1,4 @@
-package com.angluswang.newsclient.activity;
+package com.angluswang.newsclient.activity.personcenter;
 
 import android.app.Activity;
 import android.content.Intent;
