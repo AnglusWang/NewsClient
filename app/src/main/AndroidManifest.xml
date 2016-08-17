@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <!-- 闪屏页 -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.SplashActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,9 +20,10 @@
         </activity>
         <!-- 向导页 -->
         <activity
-            android:name=".GuideActivity"
+            android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
-
+        <!-- 主界面 -->
+        <activity android:name=".activity.HomeActivity"/>
     </application>
 
 </manifest>

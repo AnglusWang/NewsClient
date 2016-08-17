@@ -1,4 +1,4 @@
-package com.angluswang.newsclient;
+package com.angluswang.newsclient.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
+
+import com.angluswang.newsclient.R;
+import com.angluswang.newsclient.utils.PrefUtils;
 
 public class SplashActivity extends Activity {
 
@@ -79,7 +82,13 @@ public class SplashActivity extends Activity {
 
     // 跳转至向导页
     private void jumpNextPage() {
-        startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+        boolean showed = PrefUtils.getBoolean(SplashActivity.this,
+                "is_user_guide_showed", false);
+        if (!showed) { // 没有进入过向导页
+            startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+        } else {
+            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+        }
         finish();
     }
 }

@@ -1,6 +1,7 @@
-package com.angluswang.newsclient;
+package com.angluswang.newsclient.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.angluswang.newsclient.R;
+import com.angluswang.newsclient.utils.PrefUtils;
 
 import java.util.ArrayList;
 
@@ -88,6 +92,18 @@ public class GuideActivity extends Activity {
                     }
                 });
 
+        // 给开始体验按钮设置点击侦听
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 更新 sp 数据, 下次不再进入向导页
+                PrefUtils.setBoolean(GuideActivity.this,
+                        "is_user_guide_showed", true);
+
+                startActivity(new Intent(GuideActivity.this, HomeActivity.class));
+                finish();
+            }
+        });
     }
 
     /**
