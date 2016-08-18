@@ -3,6 +3,7 @@ package com.angluswang.newsclient.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
 
 import com.angluswang.newsclient.R;
 import com.angluswang.newsclient.fragment.ContentFragment;
@@ -23,6 +24,7 @@ public class HomeActivity extends SlidingFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
 
         initView();
