@@ -1,8 +1,9 @@
-package com.angluswang.newsclient.activity.personcenter;
+package com.angluswang.newsclient.activity;
 
 import android.os.Bundle;
 
 import com.angluswang.newsclient.R;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 /**
@@ -11,6 +12,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
  */
 
 public class HomeActivity extends SlidingFragmentActivity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +22,10 @@ public class HomeActivity extends SlidingFragmentActivity {
     }
 
     private void initView() {
+
+        setBehindContentView(R.layout.left_menu);// 设置侧边栏
+        SlidingMenu slidingMenu = getSlidingMenu();// 获取侧边栏对象
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);// 设置全屏触摸
+        slidingMenu.setBehindOffset(240);// 设置预留屏幕的宽度
     }
 }
