@@ -54,6 +54,54 @@ public class ContentFragment extends BaseFragment {
         mPagerList.add(new SettingPager(mActivity));
 
         vpPager.setAdapter(new ContentAdapter());
+
+        // 监听RadioGroup的选择事件
+        rgGroup.setOnCheckedChangeListener(
+                new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        switch (checkedId) {
+                            case R.id.rb_home:
+                                // 设置当前页面 去掉切换页面的动画
+                                vpPager.setCurrentItem(0, false);
+                                break;
+                            case R.id.rb_news:
+                                vpPager.setCurrentItem(1, false);// 设置当前页面
+                                break;
+                            case R.id.rb_smart:
+                                vpPager.setCurrentItem(2, false);// 设置当前页面
+                                break;
+                            case R.id.rb_gov:
+                                vpPager.setCurrentItem(3, false);// 设置当前页面
+                                break;
+                            case R.id.rb_setting:
+                                vpPager.setCurrentItem(4, false);// 设置当前页面
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+        vpPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position,
+                                       float positionOffset,
+                                       int positionOffsetPixels) {
+                mPagerList.get(position).initData();// 获取当前被选中的页面, 初始化该页面数据
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mPagerList.get(0).initData();// 初始化首页数据
     }
 
     class ContentAdapter extends PagerAdapter {

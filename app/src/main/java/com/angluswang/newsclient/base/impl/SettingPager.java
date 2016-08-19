@@ -3,6 +3,7 @@ package com.angluswang.newsclient.base.impl;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.angluswang.newsclient.base.BasePager;
@@ -22,6 +23,8 @@ public class SettingPager extends BasePager {
     public void initData() {
 
         tvTitle.setText("设置");// 修改标题
+        btnMenu.setVisibility(View.GONE);
+        setSlidingMenuEnable(false);
 
         TextView text = new TextView(mActivity);
         text.setText("设置");
