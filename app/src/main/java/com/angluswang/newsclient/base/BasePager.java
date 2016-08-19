@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.angluswang.newsclient.R;
-import com.angluswang.newsclient.activity.HomeActivity;
+import com.angluswang.newsclient.activity.MainActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 /**
@@ -58,7 +58,7 @@ public class BasePager {
      * 切换 SlidingMenu 的状态
      */
     public void toggleSlidingMenu() {
-        HomeActivity mainUi = (HomeActivity) mActivity;
+        MainActivity mainUi = (MainActivity) mActivity;
         SlidingMenu slidingMenu = mainUi.getSlidingMenu();
         slidingMenu.toggle();// 切换状态, 显示时隐藏, 隐藏时显示
     }
@@ -68,7 +68,7 @@ public class BasePager {
      */
     public void setSlidingMenuEnable(boolean enable) {
 
-        HomeActivity mainUi = (HomeActivity) mActivity;
+        MainActivity mainUi = (MainActivity) mActivity;
         SlidingMenu slidingMenu = mainUi.getSlidingMenu();
 
         if (enable) {

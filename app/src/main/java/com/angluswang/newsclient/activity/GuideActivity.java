@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +41,7 @@ public class GuideActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题
         setContentView(R.layout.activity_guide);
 
         initView();
@@ -100,7 +102,7 @@ public class GuideActivity extends Activity {
                 PrefUtils.setBoolean(GuideActivity.this,
                         "is_user_guide_showed", true);
 
-                startActivity(new Intent(GuideActivity.this, HomeActivity.class));
+                startActivity(new Intent(GuideActivity.this, MainActivity.class));
                 finish();
             }
         });

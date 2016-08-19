@@ -16,7 +16,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
  * 主页 活动界面
  */
 
-public class HomeActivity extends SlidingFragmentActivity {
+public class MainActivity extends SlidingFragmentActivity {
 
     private static final String FRAGMENT_LEFT_MENU = "fragment_left_menu";
     private static final String FRAGMENT_CONTENT = "fragment_content";
@@ -51,6 +51,17 @@ public class HomeActivity extends SlidingFragmentActivity {
         transaction.replace(R.id.fl_content,
                 new ContentFragment(), FRAGMENT_CONTENT);
         transaction.commit();
+    }
+
+    /**
+     * 获取侧边栏 fragment
+     */
+    public LeftMenuFragment getLeftMenuFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        LeftMenuFragment fragment =
+                (LeftMenuFragment) fm.findFragmentByTag(FRAGMENT_LEFT_MENU);
+
+        return fragment;
     }
 
 }

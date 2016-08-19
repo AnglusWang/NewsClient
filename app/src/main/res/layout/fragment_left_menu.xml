@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#0F0">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/lv_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="frament_left_menu"/>
-</FrameLayout>
+        android:layout_marginTop="40dp"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"/>
+
+</RelativeLayout>

@@ -7,8 +7,10 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.angluswang.newsclient.activity.MainActivity;
 import com.angluswang.newsclient.base.BasePager;
 import com.angluswang.newsclient.bean.NewsData;
+import com.angluswang.newsclient.fragment.LeftMenuFragment;
 import com.angluswang.newsclient.global.GlobalContants;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
@@ -83,5 +85,10 @@ public class NewsCenterPager extends BasePager {
         Gson gson = new Gson();
         mNewsData = gson.fromJson(result, NewsData.class);
         Log.i("解析结果:", mNewsData.toString());
+
+        // 刷新测边栏的数据
+        MainActivity mainUi = (MainActivity) mActivity;
+        LeftMenuFragment leftMenuFragment = mainUi.getLeftMenuFragment();
+        leftMenuFragment.setMenuData(mNewsData);
     }
 }

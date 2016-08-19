@@ -87,7 +87,7 @@ public class SplashActivity extends Activity {
         if (!showed) { // 没有进入过向导页
             startActivity(new Intent(SplashActivity.this, GuideActivity.class));
         } else {
-            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
         finish();
     }
