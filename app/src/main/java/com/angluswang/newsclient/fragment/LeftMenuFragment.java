@@ -3,12 +3,16 @@ package com.angluswang.newsclient.fragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.angluswang.newsclient.R;
+import com.angluswang.newsclient.activity.MainActivity;
+import com.angluswang.newsclient.base.impl.NewsCenterPager;
 import com.angluswang.newsclient.bean.NewsData;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 
@@ -23,6 +27,8 @@ public class LeftMenuFragment extends BaseFragment {
     private ArrayList<NewsData.NewsMenuData> mMenuList;
     private MenuAdapter mAdapter;// 菜单适配器
 
+    private int mCurrentPos;// 当前被点击的菜单项
+
     @Override
     public View initViews() {
         View view = View.inflate(mActivity, R.layout.fragment_left_menu, null);
@@ -33,7 +39,36 @@ public class LeftMenuFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView,
+                                    View view, int i, long l) {
+                mCurrentPos = i;
+                mAdapter.notifyDataSetChanged();
+                setCurrentMenuDetailPager(i);
 
+                toggleSlidingMenu();// 隐藏
+            }
+        });
+    }
+
+    /**
+     * 切换 SlidingMenu 状态
+     */
+    protected void toggleSlidingMenu() {
+        MainActivity mainUi = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUi.getSlidingMenu();
+        slidingMenu.toggle();// 切换状态, 显示时隐藏, 隐藏时显示
+    }
+
+    /**
+     * 设置 当前菜单详情页
+     */
+    protected void setCurrentMenuDetailPager(int position) {
+        MainActivity mainUi = (MainActivity) mActivity;
+        ContentFragment fragment = mainUi.getContentFragment();// 获取主页面fragment
+        NewsCenterPager pager = fragment.getNewsCenterPager();// 获取新闻中心页面
+        pager.setCurrentMenuDetailPager(position);// 设置当前菜单详情页
     }
 
     /**

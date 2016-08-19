@@ -129,4 +129,11 @@ public class ContentFragment extends BaseFragment {
             container.removeView((View) object);
         }
     }
+
+    /**
+     * 获取 新闻中心页面
+     */
+    public NewsCenterPager getNewsCenterPager() {
+        return (NewsCenterPager) mPagerList.get(1);
+    }
 }

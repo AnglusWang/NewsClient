@@ -64,4 +64,15 @@ public class MainActivity extends SlidingFragmentActivity {
         return fragment;
     }
 
+    /**
+     * 获取主页面的 Fragment
+     */
+    public ContentFragment getContentFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        ContentFragment fragment =
+                (ContentFragment) fm.findFragmentByTag(FRAGMENT_CONTENT);
+
+        return fragment;
+    }
+
 }
