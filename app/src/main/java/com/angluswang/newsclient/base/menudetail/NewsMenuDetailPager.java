@@ -10,6 +10,8 @@ import com.angluswang.newsclient.R;
 import com.angluswang.newsclient.base.BaseMenuDetailPager;
 import com.angluswang.newsclient.base.TabDetailPager;
 import com.angluswang.newsclient.bean.NewsData;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
@@ -36,8 +38,11 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
 
     @Override
     public View initViews() {
+
         View view = View.inflate(mActivity, R.layout.news_menu_detail, null);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_menu_detail);
+
+        ViewUtils.inject(this, view);
 
         mIndicator = (TabPageIndicator) view.findViewById(R.id.indicator);
         return view;
@@ -57,6 +62,14 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         mIndicator.setViewPager(mViewPager);// 要在 Viewpager 设置适配器后设置
     }
 
+    /**
+     * 跳转至下一个新闻详情页
+     */
+    @OnClick(R.id.btn_next)
+    public void nextPage(View view) {
+        int currentItem = mViewPager.getCurrentItem();
+        mViewPager.setCurrentItem(++currentItem);
+    }
     private class MenuDetailAdapter extends PagerAdapter {
 
         @Override
