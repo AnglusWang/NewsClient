@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__dark_theme.xml",
+        "source": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__dark_theme.xml"
+    },
+    {
+        "merged": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\build\\intermediates\\res\\merged\\androidTest\\debug\\color\\vpi__light_theme.xml",
+        "source": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\build\\intermediates\\bundles\\debug\\res\\color\\vpi__light_theme.xml"
+    }
+]

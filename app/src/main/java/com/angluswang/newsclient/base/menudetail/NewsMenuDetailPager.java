@@ -10,6 +10,7 @@ import com.angluswang.newsclient.R;
 import com.angluswang.newsclient.base.BaseMenuDetailPager;
 import com.angluswang.newsclient.base.TabDetailPager;
 import com.angluswang.newsclient.bean.NewsData;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
     private ArrayList<TabDetailPager> mPagerList;
 
     private ArrayList<NewsData.NewsTabData> mNewsTabData;// 页签网络数据
+    private TabPageIndicator mIndicator;
 
     public NewsMenuDetailPager(Activity activity,
                                ArrayList<NewsData.NewsTabData> children) {
@@ -36,6 +38,8 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
     public View initViews() {
         View view = View.inflate(mActivity, R.layout.news_menu_detail, null);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_menu_detail);
+
+        mIndicator = (TabPageIndicator) view.findViewById(R.id.indicator);
         return view;
     }
 
@@ -50,9 +54,15 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         }
 
         mViewPager.setAdapter(new MenuDetailAdapter());
+        mIndicator.setViewPager(mViewPager);// 要在 Viewpager 设置适配器后设置
     }
 
     private class MenuDetailAdapter extends PagerAdapter {
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mNewsTabData.get(position).title;// 获取标题
+        }
 
         @Override
         public int getCount() {
