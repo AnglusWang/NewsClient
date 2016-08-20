@@ -25,7 +25,7 @@ public class MainActivity extends SlidingFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
 
         initView();
     }

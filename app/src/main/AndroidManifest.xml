@@ -27,7 +27,8 @@
             android:name=".activity.GuideActivity"/>
         <!-- 主界面 -->
         <activity
-            android:name=".activity.MainActivity"/>
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.PageIndicatorDefaults"/>
     </application>
 
 </manifest>
