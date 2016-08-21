@@ -6,7 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,11 @@ public class TabDetailPager extends BaseMenuDetailPager
     @ViewInject(R.id.indicator)
     private CirclePageIndicator mIndicator;// 头条新闻位置指示器
 
+    @ViewInject(R.id.lv_list)
+    private ListView lvList;// 新闻列表
+    private ArrayList<TabData.TabNewsData> mNewsList; // 新闻数据集合
+    private NewsAdapter newsAdapter;
+
     public TabDetailPager(Activity activity, NewsData.NewsTabData newsTabData) {
         super(activity);
         mTabData = newsTabData;
@@ -60,8 +67,13 @@ public class TabDetailPager extends BaseMenuDetailPager
     @Override
     public View initViews() {
         View view = View.inflate(mActivity, R.layout.tab_detail_pager, null);
+        View headerView = View.inflate(mActivity, R.layout.list_header_topnews, null);
 
         ViewUtils.inject(this, view);
+        ViewUtils.inject(this, headerView);
+
+        // 将头条新闻以头布局的形式加给 listView
+        lvList.addHeaderView(headerView);
         return view;
     }
 
@@ -99,16 +111,29 @@ public class TabDetailPager extends BaseMenuDetailPager
         Log.i("页签详情解析:", mTabDetailData.toString());
 
         mTopNewsList = mTabDetailData.data.topnews;
-        mViewPager.setAdapter(new TopNewsAdapter());
+        mNewsList = mTabDetailData.data.news;
 
-        mIndicator.setViewPager(mViewPager);
-        mIndicator.setOnPageChangeListener(this);
-        mIndicator.setSnap(true);// 支持快照显示
-        mIndicator.onPageSelected(0);// 让指示器重新定位到第一个点
+        if (mTopNewsList != null) {
+            mViewPager.setAdapter(new TopNewsAdapter());
 
-        tvTitle.setText(mTopNewsList.get(0).title);
+            mIndicator.setViewPager(mViewPager);
+            mIndicator.setOnPageChangeListener(this);
+            mIndicator.setSnap(true);// 支持快照显示
+            mIndicator.onPageSelected(0);// 让指示器重新定位到第一个点
+
+            tvTitle.setText(mTopNewsList.get(0).title);
+        }
+
+        if (mNewsList != null) {
+            newsAdapter = new NewsAdapter();
+            lvList.setAdapter(newsAdapter);
+
+        }
     }
 
+    /**
+     * 头条新闻 适配器
+     */
     private class TopNewsAdapter extends PagerAdapter {
 
         private BitmapUtils utils;
@@ -166,5 +191,65 @@ public class TabDetailPager extends BaseMenuDetailPager
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    /**
+     * 新闻 ListView 适配器
+     */
+    private class NewsAdapter extends BaseAdapter {
+
+        private BitmapUtils utils;
+
+        public NewsAdapter() {
+            utils = new BitmapUtils(mActivity);
+            utils.configDefaultLoadingImage(R.drawable.pic_item_list_default);
+        }
+
+        @Override
+        public int getCount() {
+            return mNewsList.size();
+        }
+
+        @Override
+        public TabData.TabNewsData getItem(int position) {
+            return mNewsList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = View.inflate(mActivity, R.layout.list_news_item, null);
+                holder = new ViewHolder();
+
+                holder.imgPic = (ImageView) convertView.findViewById(R.id.img_pic);
+                holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+                holder.tvDate = (TextView) convertView.findViewById(R.id.tv_date);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            TabData.TabNewsData item = getItem(position);
+
+            holder.tvTitle.setText(item.title);
+            holder.tvDate.setText(item.pubdate);
+            utils.display(holder.imgPic, item.listimage);
+
+            return convertView;
+        }
+    }
+
+    static class ViewHolder {
+        public TextView tvTitle;
+        public TextView tvDate;
+        public ImageView imgPic;
     }
 }

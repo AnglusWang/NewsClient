@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NewsClient</string>
+    <string name="news_desc_demo">新闻内容标题新闻内容标题新闻内容标题新闻内容标题
+        新闻内容标题新闻内容标题新闻内容标题新闻内容标题新闻内容标题</string>
 </resources>
