@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +16,7 @@ import com.angluswang.newsclient.bean.NewsData;
 import com.angluswang.newsclient.bean.TabData;
 import com.angluswang.newsclient.global.GlobalContants;
 import com.angluswang.newsclient.utils.UrlUtils;
+import com.angluswang.newsclient.view.RefreshListView;
 import com.google.gson.Gson;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -54,7 +54,7 @@ public class TabDetailPager extends BaseMenuDetailPager
     private CirclePageIndicator mIndicator;// 头条新闻位置指示器
 
     @ViewInject(R.id.lv_list)
-    private ListView lvList;// 新闻列表
+    private RefreshListView lvList;// 新闻列表
     private ArrayList<TabData.TabNewsData> mNewsList; // 新闻数据集合
     private NewsAdapter newsAdapter;
 
