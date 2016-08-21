@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.angluswang.newsclient.R;
+import com.angluswang.newsclient.activity.MainActivity;
 import com.angluswang.newsclient.base.BaseMenuDetailPager;
 import com.angluswang.newsclient.base.TabDetailPager;
 import com.angluswang.newsclient.bean.NewsData;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.viewpagerindicator.TabPageIndicator;
@@ -20,7 +22,8 @@ import java.util.ArrayList;
  * Created by AnglusWang on 2016/8/19.
  * 菜单详情页-新闻
  */
-public class NewsMenuDetailPager extends BaseMenuDetailPager {
+public class NewsMenuDetailPager extends BaseMenuDetailPager
+        implements ViewPager.OnPageChangeListener {
 
     private ViewPager mViewPager;
 
@@ -45,6 +48,9 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         ViewUtils.inject(this, view);
 
         mIndicator = (TabPageIndicator) view.findViewById(R.id.indicator);
+
+        // 滑动监听需要设置给Indicator而不是viewpager
+        mIndicator.setOnPageChangeListener(this);
         return view;
     }
 
@@ -70,6 +76,8 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         int currentItem = mViewPager.getCurrentItem();
         mViewPager.setCurrentItem(++currentItem);
     }
+
+    // 适配器
     private class MenuDetailAdapter extends PagerAdapter {
 
         @Override
@@ -99,6 +107,30 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position,
+                               float positionOffset,
+                               int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        MainActivity mainUi = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUi.getSlidingMenu();
+
+        if (position == 0) { //只有在第一个页面(北京), 侧边栏才允许出来
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
 }
