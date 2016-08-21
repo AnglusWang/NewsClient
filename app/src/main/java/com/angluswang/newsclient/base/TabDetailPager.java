@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,9 @@ public class TabDetailPager extends BaseMenuDetailPager
     private TextView tvTitle;// 头条新闻的标题
     private ArrayList<TabData.TopNewsData> mTopNewsList;
 
+    @ViewInject(R.id.indicator)
+    private CirclePageIndicator mIndicator;// 头条新闻位置指示器
+
     public TabDetailPager(Activity activity, NewsData.NewsTabData newsTabData) {
         super(activity);
         mTabData = newsTabData;
@@ -58,7 +62,6 @@ public class TabDetailPager extends BaseMenuDetailPager
         View view = View.inflate(mActivity, R.layout.tab_detail_pager, null);
 
         ViewUtils.inject(this, view);
-
         return view;
     }
 
@@ -96,10 +99,14 @@ public class TabDetailPager extends BaseMenuDetailPager
         Log.i("页签详情解析:", mTabDetailData.toString());
 
         mTopNewsList = mTabDetailData.data.topnews;
-        tvTitle.setText(mTopNewsList.get(0).title);
-
-        mViewPager.setOnPageChangeListener(this);
         mViewPager.setAdapter(new TopNewsAdapter());
+
+        mIndicator.setViewPager(mViewPager);
+        mIndicator.setOnPageChangeListener(this);
+        mIndicator.setSnap(true);// 支持快照显示
+        mIndicator.onPageSelected(0);// 让指示器重新定位到第一个点
+
+        tvTitle.setText(mTopNewsList.get(0).title);
     }
 
     private class TopNewsAdapter extends PagerAdapter {
