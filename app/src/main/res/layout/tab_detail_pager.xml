@@ -4,12 +4,32 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.angluswang.newsclient.view.TopNewsViewPager
-        android:id="@+id/vp_news"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-    </com.angluswang.newsclient.view.TopNewsViewPager>
+        <com.angluswang.newsclient.view.TopNewsViewPager
+            android:id="@+id/vp_news"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#a000"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lv_list"

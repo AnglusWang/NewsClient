@@ -31,7 +31,8 @@ import java.util.ArrayList;
  * Created by AnglusWang on 2016/8/19.
  * 页签详情页
  */
-public class TabDetailPager extends BaseMenuDetailPager {
+public class TabDetailPager extends BaseMenuDetailPager
+        implements ViewPager.OnPageChangeListener {
 
     private NewsData.NewsTabData mTabData;
     private TextView tvText;
@@ -42,6 +43,8 @@ public class TabDetailPager extends BaseMenuDetailPager {
     private final String mUrl;// 服务器网址
     private TabData mTabDetailData;
 
+    @ViewInject(R.id.tv_title)
+    private TextView tvTitle;// 头条新闻的标题
     private ArrayList<TabData.TopNewsData> mTopNewsList;
 
     public TabDetailPager(Activity activity, NewsData.NewsTabData newsTabData) {
@@ -93,11 +96,9 @@ public class TabDetailPager extends BaseMenuDetailPager {
         Log.i("页签详情解析:", mTabDetailData.toString());
 
         mTopNewsList = mTabDetailData.data.topnews;
-        // 使用 Genymotion 模拟器更换地址
-        for (TabData.TopNewsData data : mTopNewsList) {
-            data.topimage.replace("10.0.2.2", "10.0.3.2");
-        }
+        tvTitle.setText(mTopNewsList.get(0).title);
 
+        mViewPager.setOnPageChangeListener(this);
         mViewPager.setAdapter(new TopNewsAdapter());
     }
 
@@ -140,5 +141,23 @@ public class TabDetailPager extends BaseMenuDetailPager {
                                 int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position,
+                               float positionOffset,
+                               int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        TabData.TopNewsData topNewsData = mTopNewsList.get(position);
+        tvTitle.setText(topNewsData.title);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
