@@ -1,5 +1,9 @@
 [
     {
+        "merged": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\news_tab_item_bg_select.9.png",
+        "source": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\drawable-hdpi\\news_tab_item_bg_select.9.png"
+    },
+    {
         "merged": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\vpi__tab_selected_focused_holo.9.png",
         "source": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\drawable-hdpi\\vpi__tab_selected_focused_holo.9.png"
     },

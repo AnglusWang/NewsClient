@@ -850,12 +850,12 @@
                 "from": {
                     "file": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\values\\vpi__styles.xml",
                     "position": {
-                        "startLine": 37,
+                        "startLine": 39,
                         "startColumn": 4,
-                        "startOffset": 1565,
-                        "endLine": 40,
+                        "startOffset": 1652,
+                        "endLine": 42,
                         "endColumn": 12,
-                        "endOffset": 1760
+                        "endOffset": 1847
                     }
                 }
             },
@@ -871,12 +871,12 @@
                 "from": {
                     "file": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\values\\vpi__styles.xml",
                     "position": {
-                        "startLine": 17,
+                        "startLine": 18,
                         "startColumn": 4,
-                        "startOffset": 668,
-                        "endLine": 20,
+                        "startOffset": 669,
+                        "endLine": 21,
                         "endColumn": 12,
-                        "endOffset": 916
+                        "endOffset": 917
                     }
                 }
             },
@@ -892,12 +892,12 @@
                 "from": {
                     "file": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\values\\vpi__styles.xml",
                     "position": {
-                        "startLine": 22,
+                        "startLine": 23,
                         "startColumn": 4,
-                        "startOffset": 922,
-                        "endLine": 23,
+                        "startOffset": 923,
+                        "endLine": 24,
                         "endColumn": 12,
-                        "endOffset": 956
+                        "endOffset": 957
                     }
                 }
             },
@@ -913,12 +913,12 @@
                 "from": {
                     "file": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\values\\vpi__styles.xml",
                     "position": {
-                        "startLine": 42,
+                        "startLine": 44,
                         "startColumn": 4,
-                        "startOffset": 1766,
-                        "endLine": 45,
+                        "startOffset": 1853,
+                        "endLine": 47,
                         "endColumn": 12,
-                        "endOffset": 1951
+                        "endOffset": 2038
                     }
                 }
             },
@@ -927,19 +927,19 @@
                     "startLine": 72,
                     "startColumn": 4,
                     "startOffset": 6164,
-                    "endLine": 82,
+                    "endLine": 83,
                     "endColumn": 12,
-                    "endOffset": 6761
+                    "endOffset": 6847
                 },
                 "from": {
                     "file": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\viewpagerIndicator\\src\\main\\res\\values\\vpi__styles.xml",
                     "position": {
-                        "startLine": 25,
+                        "startLine": 26,
                         "startColumn": 4,
-                        "startOffset": 962,
-                        "endLine": 35,
+                        "startOffset": 963,
+                        "endLine": 37,
                         "endColumn": 12,
-                        "endOffset": 1559
+                        "endOffset": 1646
                     }
                 }
             }

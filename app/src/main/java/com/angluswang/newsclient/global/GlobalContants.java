@@ -8,7 +8,7 @@ package com.angluswang.newsclient.global;
 public class GlobalContants {
 
     // 使用 Genymotion 模拟器时，为 10.0.3.2，其他模拟器 10.0.2.2
-    public static final String SERVER_URL = "http://10.0.3.2:8080/zhbj/";
+    public static final String SERVER_URL = "http://10.0.3.2:8080/zhbj";
     public static final String CATEGORIES_URL =
-            SERVER_URL + "categories.json"; // 获取分类信息的接口
+            SERVER_URL + "/categories.json"; // 获取分类信息的接口
 }
