@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.angluswang.newsclient.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by AnglusWang on 2016/8/21.
  * 下拉刷新 ListView
@@ -68,6 +71,8 @@ public class RefreshListView extends ListView {
         mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);//隐藏头布局
 
         initArrowAnim();
+
+        tvTime.setText("上次刷新： " + getCurrentTime());
     }
 
     /**
@@ -184,6 +189,31 @@ public class RefreshListView extends ListView {
 
     public interface OnRefreshListener {
         public void onRefresh();
+    }
+
+    /*
+     * 收起下拉刷新的控件
+	 */
+    public void onRefreshComplete(boolean success) {
+        mCurrentState = STATE_PULL_REFRESH;
+        tvTitle.setText("下拉刷新");
+        ivArrow.setVisibility(View.VISIBLE);
+        pbProgress.setVisibility(View.INVISIBLE);
+
+        mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);// 隐藏
+
+        if (success) {
+            tvTime.setText("最后刷新时间:" + getCurrentTime());
+        }
+    }
+
+    /**
+     * 获取当前时间
+     */
+
+    public String getCurrentTime() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(new Date());
     }
 
 }

@@ -102,6 +102,8 @@ public class TabDetailPager extends BaseMenuDetailPager
                         Log.i("页签详情页返回结果:", result);
 
                         parseData(result);// 解析数据
+
+                        lvList.onRefreshComplete(true);
                     }
 
                     @Override
@@ -109,6 +111,8 @@ public class TabDetailPager extends BaseMenuDetailPager
                         Toast.makeText(mActivity, msg,
                                 Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
+
+                        lvList.onRefreshComplete(false);
                     }
                 });
     }
