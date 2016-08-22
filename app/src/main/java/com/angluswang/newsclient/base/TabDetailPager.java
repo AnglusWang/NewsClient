@@ -74,6 +74,15 @@ public class TabDetailPager extends BaseMenuDetailPager
 
         // 将头条新闻以头布局的形式加给 listView
         lvList.addHeaderView(headerView);
+
+        // 设置下拉刷新监听
+        lvList.setOnRefreshListener(new RefreshListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromServer();
+            }
+        });
+
         return view;
     }
 
