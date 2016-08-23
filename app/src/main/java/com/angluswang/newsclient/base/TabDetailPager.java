@@ -1,12 +1,14 @@
 package com.angluswang.newsclient.base;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.angluswang.newsclient.R;
 import com.angluswang.newsclient.bean.NewsData;
 import com.angluswang.newsclient.bean.TabData;
 import com.angluswang.newsclient.global.GlobalContants;
+import com.angluswang.newsclient.utils.PrefUtils;
 import com.angluswang.newsclient.utils.UrlUtils;
 import com.angluswang.newsclient.view.RefreshListView;
 import com.google.gson.Gson;
@@ -96,7 +99,29 @@ public class TabDetailPager extends BaseMenuDetailPager
             }
         });
 
+        lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView,
+                                    View view, int i, long l) {
+                // 在本地记录已读状态
+                String ids = PrefUtils.getString(mActivity, "read_ids", "");
+                String readId = mNewsList.get(i).id;
+                if (!ids.contains(readId)) {
+                    ids = ids + readId + ",";
+                    PrefUtils.setString(mActivity, "read_ids", ids);
+                }
+
+                changeReadState(view);// 局部改变 View 的阅读状态
+            }
+        });
+
         return view;
+    }
+
+    // 改变 View 的阅读状态
+    private void changeReadState(View view) {
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        tvTitle.setTextColor(Color.GRAY);
     }
 
     @Override
@@ -305,6 +330,13 @@ public class TabDetailPager extends BaseMenuDetailPager
             holder.tvTitle.setText(item.title);
             holder.tvDate.setText(item.pubdate);
             utils.display(holder.imgPic, item.listimage);
+
+            String ids = PrefUtils.getString(mActivity, "read_ids", "");
+            if (ids.contains(getItem(position).id)) {
+                holder.tvTitle.setTextColor(Color.GRAY);
+            } else {
+                holder.tvTitle.setTextColor(Color.BLACK);
+            }
 
             return convertView;
         }

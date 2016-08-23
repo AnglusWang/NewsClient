@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -24,7 +25,7 @@ import java.util.Date;
  */
 
 public class RefreshListView extends ListView
-        implements AbsListView.OnScrollListener {
+        implements AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
 
     private static final int STATE_PULL_REFRESH = 0;// 下拉刷新
     private static final int STATE_RELEASE_REFRESH = 1;// 松开刷新
@@ -86,7 +87,7 @@ public class RefreshListView extends ListView
      * 初始化 脚布局 （上拉加载）
      */
     private void initFooterView() {
-        mFooterView = View.inflate(getContext(), R.layout.refresh_listview_footer, null);
+        mFooterView = View.inflate(getContext(), R.layout.refresh_footer, null);
         this.addFooterView(mFooterView);
 
         mFooterView.measure(0, 0);
@@ -269,4 +270,23 @@ public class RefreshListView extends ListView
         return format.format(new Date());
     }
 
+    // 点击监听get
+    private OnItemClickListener mItemClickListener;
+
+    @Override
+    public void setOnItemClickListener(
+            android.widget.AdapterView.OnItemClickListener listener) {
+        super.setOnItemClickListener(this);
+
+        mItemClickListener = listener;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView,
+                            View view, int i, long l) {
+        if (mItemClickListener != null) {
+            mItemClickListener.onItemClick(adapterView, view,
+                    i - getHeaderViewsCount(), l);
+        }
+    }
 }
