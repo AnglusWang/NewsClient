@@ -1,6 +1,7 @@
 package com.angluswang.newsclient.base;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.angluswang.newsclient.R;
+import com.angluswang.newsclient.activity.NewsDetailActivity;
 import com.angluswang.newsclient.bean.NewsData;
 import com.angluswang.newsclient.bean.TabData;
 import com.angluswang.newsclient.global.GlobalContants;
@@ -112,6 +114,12 @@ public class TabDetailPager extends BaseMenuDetailPager
                 }
 
                 changeReadState(view);// 局部改变 View 的阅读状态
+
+                // 跳转至新闻详情页
+                Intent intent = new Intent();
+                intent.setClass(mActivity, NewsDetailActivity.class);
+                intent.putExtra("url", mNewsList.get(i).url);
+                mActivity.startActivity(intent);
             }
         });
 
