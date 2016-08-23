@@ -66,7 +66,7 @@ public class RefreshListView extends ListView {
         pbProgress = (ProgressBar) mHeaderView.findViewById(R.id.pb_progress);
 
         mHeaderView.measure(0, 0);
-        int mHeaderViewHeight = mHeaderView.getMeasuredHeight();
+        mHeaderViewHeight = mHeaderView.getMeasuredHeight();
 
         mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);//隐藏头布局
 
