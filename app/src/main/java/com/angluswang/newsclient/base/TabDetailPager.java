@@ -3,6 +3,7 @@ package com.angluswang.newsclient.base;
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class TabDetailPager extends BaseMenuDetailPager
         implements ViewPager.OnPageChangeListener {
 
     private NewsData.NewsTabData mTabData;
-    private TextView tvText;
 
     @ViewInject(R.id.vp_news)
     private ViewPager mViewPager;
@@ -57,6 +57,8 @@ public class TabDetailPager extends BaseMenuDetailPager
     private RefreshListView lvList;// 新闻列表
     private ArrayList<TabData.TabNewsData> mNewsList; // 新闻数据集合
     private NewsAdapter newsAdapter;
+
+    private String mMoreUrl;// 下一页链接
 
     public TabDetailPager(Activity activity, NewsData.NewsTabData newsTabData) {
         super(activity);
@@ -81,6 +83,17 @@ public class TabDetailPager extends BaseMenuDetailPager
             public void onRefresh() {
                 getDataFromServer();
             }
+
+            @Override
+            public void onLoadMore() {
+                if (mMoreUrl != null) {
+                    getMoreDataFromServer();
+                } else {
+                    Toast.makeText(mActivity, "最后一页了",
+                            Toast.LENGTH_SHORT).show();
+                    lvList.onRefreshComplete(false); // 收起加载更多的布局
+                }
+            }
         });
 
         return view;
@@ -99,9 +112,32 @@ public class TabDetailPager extends BaseMenuDetailPager
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
                         String result = responseInfo.result;
-                        Log.i("页签详情页返回结果:", result);
+                        parseData(result, false);// 解析数据
 
-                        parseData(result);// 解析数据
+                        lvList.onRefreshComplete(true);
+                    }
+
+                    @Override
+                    public void onFailure(HttpException error, String msg) {
+                        Toast.makeText(mActivity, msg,
+                                Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                        lvList.onRefreshComplete(false);
+                    }
+                });
+    }
+
+    // 获取更多数据
+    private void getMoreDataFromServer() {
+        HttpUtils utils = new HttpUtils();
+        utils.send(HttpRequest.HttpMethod.GET, mMoreUrl,
+                new RequestCallBack<String>() {
+
+                    @Override
+                    public void onSuccess(ResponseInfo<String> responseInfo) {
+                        String result = responseInfo.result;
+                        parseData(result, true);
 
                         lvList.onRefreshComplete(true);
                     }
@@ -118,29 +154,43 @@ public class TabDetailPager extends BaseMenuDetailPager
     }
 
     // 解析 获取的数据
-    private void parseData(String result) {
+    private void parseData(String result, boolean isMore) {
         Gson gson = new Gson();
         mTabDetailData = gson.fromJson(result, TabData.class);
         Log.i("页签详情解析:", mTabDetailData.toString());
 
-        mTopNewsList = mTabDetailData.data.topnews;
-        mNewsList = mTabDetailData.data.news;
-
-        if (mTopNewsList != null) {
-            mViewPager.setAdapter(new TopNewsAdapter());
-
-            mIndicator.setViewPager(mViewPager);
-            mIndicator.setOnPageChangeListener(this);
-            mIndicator.setSnap(true);// 支持快照显示
-            mIndicator.onPageSelected(0);// 让指示器重新定位到第一个点
-
-            tvTitle.setText(mTopNewsList.get(0).title);
+        // 处理下一页链接
+        String more = mTabDetailData.data.more;
+        if (!TextUtils.isEmpty(more)) {
+            mMoreUrl = GlobalContants.SERVER_URL + more;
+        } else {
+            mMoreUrl = null;
         }
 
-        if (mNewsList != null) {
-            newsAdapter = new NewsAdapter();
-            lvList.setAdapter(newsAdapter);
+        if (!isMore) {
+            mTopNewsList = mTabDetailData.data.topnews;
+            mNewsList = mTabDetailData.data.news;
 
+            if (mTopNewsList != null) {
+                mViewPager.setAdapter(new TopNewsAdapter());
+
+                mIndicator.setViewPager(mViewPager);
+                mIndicator.setOnPageChangeListener(this);
+                mIndicator.setSnap(true);// 支持快照显示
+                mIndicator.onPageSelected(0);// 让指示器重新定位到第一个点
+
+                tvTitle.setText(mTopNewsList.get(0).title);
+            }
+
+            if (mNewsList != null) {
+                newsAdapter = new NewsAdapter();
+                lvList.setAdapter(newsAdapter);
+
+            }
+        } else {// 如果是加载下一页,需要将数据追加给原来的集合
+            ArrayList<TabData.TabNewsData> news = mTabDetailData.data.news;
+            mNewsList.addAll(news);
+            newsAdapter.notifyDataSetChanged();
         }
     }
 

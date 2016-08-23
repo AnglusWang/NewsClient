@@ -2,10 +2,12 @@ package com.angluswang.newsclient.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -21,7 +23,8 @@ import java.util.Date;
  * 下拉刷新 ListView
  */
 
-public class RefreshListView extends ListView {
+public class RefreshListView extends ListView
+        implements AbsListView.OnScrollListener {
 
     private static final int STATE_PULL_REFRESH = 0;// 下拉刷新
     private static final int STATE_RELEASE_REFRESH = 1;// 松开刷新
@@ -31,12 +34,15 @@ public class RefreshListView extends ListView {
     private int startY = -1;// 滑动起点的y坐标
     private int mHeaderViewHeight;
 
+    private View mFooterView;
+    private int mFooterViewHeight;
+
     private int mCurrentState = STATE_PULL_REFRESH;// 当前状态
     private TextView tvTitle;
     private TextView tvTime;
     private ImageView ivArrow;
-    private ProgressBar pbProgress;
 
+    private ProgressBar pbProgress;
     private RotateAnimation animUp;// 箭头向上动画
     private RotateAnimation animDown;// 箭头向下动画
 
@@ -51,10 +57,11 @@ public class RefreshListView extends ListView {
     public RefreshListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initHeaderView();
+        initFooterView();
     }
 
     /**
-     * 初始化 头布局
+     * 初始化 头布局 （下拉刷新）
      */
     private void initHeaderView() {
         mHeaderView = View.inflate(getContext(), R.layout.refresh_header, null);
@@ -73,6 +80,45 @@ public class RefreshListView extends ListView {
         initArrowAnim();
 
         tvTime.setText("上次刷新： " + getCurrentTime());
+    }
+
+    /**
+     * 初始化 脚布局 （上拉加载）
+     */
+    private void initFooterView() {
+        mFooterView = View.inflate(getContext(), R.layout.refresh_listview_footer, null);
+        this.addFooterView(mFooterView);
+
+        mFooterView.measure(0, 0);
+        mFooterViewHeight = mFooterView.getMeasuredHeight();
+        mFooterView.setPadding(0, -mFooterViewHeight, 0, 0);// 隐藏
+
+        this.setOnScrollListener(this);
+    }
+
+    private boolean isLoadingMore;
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+        if (i == SCROLL_STATE_FLING || i == SCROLL_STATE_IDLE) {
+            if (getLastVisiblePosition() == getCount() - 1 && !isLoadingMore) {
+                Log.i("loadingMore: ", " 已经滑到底了。。。");
+
+                mFooterView.setPadding(0, 0, 0, 0); // 显示
+                setSelection(getCount() - 1);// 改变 ListView 的显示位置
+
+                isLoadingMore = true;
+
+                if (mListener != null) {
+                    mListener.onLoadMore();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
     }
 
     /**
@@ -189,21 +235,28 @@ public class RefreshListView extends ListView {
 
     public interface OnRefreshListener {
         public void onRefresh();
+
+        public void onLoadMore();
     }
 
     /*
-     * 收起下拉刷新的控件
+     * 收起下拉刷新 及 上拉加载 的控件
 	 */
     public void onRefreshComplete(boolean success) {
-        mCurrentState = STATE_PULL_REFRESH;
-        tvTitle.setText("下拉刷新");
-        ivArrow.setVisibility(View.VISIBLE);
-        pbProgress.setVisibility(View.INVISIBLE);
+        if (isLoadingMore) {
+            mFooterView.setPadding(0, -mFooterViewHeight, 0, 0);// 隐藏
+            isLoadingMore = false;
+        } else {
+            mCurrentState = STATE_PULL_REFRESH;
+            tvTitle.setText("下拉刷新");
+            ivArrow.setVisibility(View.VISIBLE);
+            pbProgress.setVisibility(View.INVISIBLE);
 
-        mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);// 隐藏
+            mHeaderView.setPadding(0, -mHeaderViewHeight, 0, 0);// 隐藏
 
-        if (success) {
-            tvTime.setText("最后刷新时间:" + getCurrentTime());
+            if (success) {
+                tvTime.setText("最后刷新时间:" + getCurrentTime());
+            }
         }
     }
 
