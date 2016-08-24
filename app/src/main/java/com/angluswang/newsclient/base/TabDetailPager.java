@@ -3,6 +3,7 @@ package com.angluswang.newsclient.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -65,6 +66,8 @@ public class TabDetailPager extends BaseMenuDetailPager
     private NewsAdapter newsAdapter;
 
     private String mMoreUrl;// 下一页链接
+
+    private Handler mHandler;
 
     public TabDetailPager(Activity activity, NewsData.NewsTabData newsTabData) {
         super(activity);
@@ -229,6 +232,27 @@ public class TabDetailPager extends BaseMenuDetailPager
                 lvList.setAdapter(newsAdapter);
 
             }
+
+            // 自动轮播条显示
+            if (mHandler == null) {
+                mHandler = new Handler() {
+                    public void handleMessage(android.os.Message msg) {
+
+                        int currentItem = mViewPager.getCurrentItem();
+                        if (currentItem < mTopNewsList.size() - 1) {
+                            currentItem++;
+                        } else {
+                            currentItem = 0;
+                        }
+
+                        mViewPager.setCurrentItem(currentItem);// 切换到下一个页面
+                        mHandler.sendEmptyMessageDelayed(0, 2500);// 继续延时3秒发消息
+                        // 形成循环
+                    }
+                };
+                mHandler.sendEmptyMessageDelayed(0, 2500);// 延时3秒后发消息
+            }
+
         } else {// 如果是加载下一页,需要将数据追加给原来的集合
             ArrayList<TabData.TabNewsData> news = mTabDetailData.data.news;
             mNewsList.addAll(news);
