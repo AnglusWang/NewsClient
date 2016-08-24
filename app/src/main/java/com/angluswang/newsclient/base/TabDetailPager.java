@@ -20,6 +20,7 @@ import com.angluswang.newsclient.activity.NewsDetailActivity;
 import com.angluswang.newsclient.bean.NewsData;
 import com.angluswang.newsclient.bean.TabData;
 import com.angluswang.newsclient.global.GlobalContants;
+import com.angluswang.newsclient.utils.CacheUtils;
 import com.angluswang.newsclient.utils.PrefUtils;
 import com.angluswang.newsclient.utils.UrlUtils;
 import com.angluswang.newsclient.view.RefreshListView;
@@ -134,6 +135,11 @@ public class TabDetailPager extends BaseMenuDetailPager
 
     @Override
     public void initData() {
+        String cache = CacheUtils.getCache(mUrl, mActivity);
+        if (!TextUtils.isEmpty(cache)) {
+            parseData(cache, false);
+        }
+
         getDataFromServer();
     }
 
@@ -148,6 +154,9 @@ public class TabDetailPager extends BaseMenuDetailPager
                         parseData(result, false);// 解析数据
 
                         lvList.onRefreshComplete(true);
+
+                        // 设置缓存
+                        CacheUtils.setCache(mUrl, result, mActivity);
                     }
 
                     @Override

@@ -1,6 +1,7 @@
 package com.angluswang.newsclient.base.impl;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.angluswang.newsclient.base.menudetail.TopicMenuDetailPager;
 import com.angluswang.newsclient.bean.NewsData;
 import com.angluswang.newsclient.fragment.LeftMenuFragment;
 import com.angluswang.newsclient.global.GlobalContants;
+import com.angluswang.newsclient.utils.CacheUtils;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -43,7 +45,11 @@ public class NewsCenterPager extends BasePager {
         tvTitle.setText("新闻");// 修改标题
         setSlidingMenuEnable(true);
 
-        getDataFromService();
+        String cache = CacheUtils.getCache(GlobalContants.CATEGORIES_URL, mActivity);
+        if (!TextUtils.isEmpty(cache)) {// 如果缓存存在,直接解析数据, 无需访问网路
+            parseData(cache);
+        }
+        getDataFromService();// 不管有没有缓存, 都获取最新数据, 保证数据最新
     }
 
     /**
@@ -60,6 +66,10 @@ public class NewsCenterPager extends BasePager {
                         Log.i("返回结果:", result);
 
                         parseData(result);
+
+                        // 设置缓存
+                        CacheUtils.setCache(GlobalContants.CATEGORIES_URL,
+                                result, mActivity);
                     }
 
                     @Override
