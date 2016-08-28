@@ -23,7 +23,7 @@ public class SettingPager extends BasePager {
     public void initData() {
 
         tvTitle.setText("设置");// 修改标题
-        btnMenu.setVisibility(View.GONE);
+        imgMenu.setVisibility(View.GONE);
         setSlidingMenuEnable(false);
 
         TextView text = new TextView(mActivity);

@@ -3,6 +3,7 @@ package com.angluswang.newsclient.base.impl;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.angluswang.newsclient.activity.MainActivity;
@@ -102,7 +103,7 @@ public class NewsCenterPager extends BasePager {
         mPagers.add(new NewsMenuDetailPager(mActivity,
                 mNewsData.data.get(0).children));
         mPagers.add(new TopicMenuDetailPager(mActivity));
-        mPagers.add(new PhotoMenuDetailPager(mActivity));
+        mPagers.add(new PhotoMenuDetailPager(mActivity, imgPhoto));
         mPagers.add(new InteractMenuDetailPager(mActivity));
 
         setCurrentMenuDetailPager(0);// 设置菜单详情页-新闻为默认当前页
@@ -121,5 +122,12 @@ public class NewsCenterPager extends BasePager {
         tvTitle.setText(menuData.title);
 
         pager.initData();// 初始化当前页面的数据
+
+        // 组图页 图片按钮
+        if (pager instanceof PhotoMenuDetailPager) {
+            imgPhoto.setVisibility(View.VISIBLE);
+        } else {
+            imgPhoto.setVisibility(View.GONE);
+        }
     }
 }

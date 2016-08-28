@@ -23,7 +23,7 @@ public class HomePager extends BasePager {
     public void initData() {
 
         tvTitle.setText("智慧北京");// 修改标题
-        btnMenu.setVisibility(View.GONE);// 隐藏菜单按钮
+        imgMenu.setVisibility(View.GONE);// 隐藏菜单按钮
         setSlidingMenuEnable(false);//关闭侧边栏
 
         TextView text = new TextView(mActivity);

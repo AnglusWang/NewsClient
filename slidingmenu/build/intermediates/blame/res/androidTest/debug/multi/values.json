@@ -1,23 +1,23 @@
 [
     {
-        "outputFile": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\slidingmenu\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\slidingmenu\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
         "map": [
             {
                 "to": {
-                    "startLine": 14,
+                    "startLine": 3,
                     "startColumn": 4,
-                    "startOffset": 1092,
+                    "startOffset": 961,
                     "endColumn": 42,
-                    "endOffset": 1130
+                    "endOffset": 999
                 },
                 "from": {
                     "file": "E:\\Android\\MyApplication\\Small_projects\\NewsClient\\slidingmenu\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 14,
+                        "startLine": 3,
                         "startColumn": 4,
-                        "startOffset": 1092,
+                        "startOffset": 961,
                         "endColumn": 42,
-                        "endOffset": 1130
+                        "endOffset": 999
                     }
                 }
             }

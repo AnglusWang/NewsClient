@@ -22,7 +22,8 @@ public class BasePager {
 
     public TextView tvTitle;// 标题对象
     public FrameLayout flContent;// 内容
-    public ImageButton btnMenu;// 菜单按钮
+    public ImageButton imgMenu;// 菜单按钮
+    public ImageButton imgPhoto;// 组图切换按钮
 
     public BasePager(Activity activity) {
         mActivity = activity;
@@ -38,8 +39,9 @@ public class BasePager {
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
         flContent = (FrameLayout) mRootView.findViewById(R.id.fl_content);
 
-        btnMenu = (ImageButton) mRootView.findViewById(R.id.btn_menu);
-        btnMenu.setOnClickListener(new View.OnClickListener() {
+        imgPhoto = (ImageButton) mRootView.findViewById(R.id.btn_photo);
+        imgMenu = (ImageButton) mRootView.findViewById(R.id.btn_menu);
+        imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleSlidingMenu(); // 切换 侧边栏的显隐状态
