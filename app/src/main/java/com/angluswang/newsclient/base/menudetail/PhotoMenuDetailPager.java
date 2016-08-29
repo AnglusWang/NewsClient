@@ -17,8 +17,8 @@ import com.angluswang.newsclient.base.BaseMenuDetailPager;
 import com.angluswang.newsclient.bean.PhotosData;
 import com.angluswang.newsclient.global.GlobalContants;
 import com.angluswang.newsclient.utils.CacheUtils;
+import com.angluswang.newsclient.utils.bitmap.MyBitmapUtils;
 import com.google.gson.Gson;
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -111,11 +111,13 @@ public class PhotoMenuDetailPager extends BaseMenuDetailPager {
 
     class PhotoAdapter extends BaseAdapter {
 
-        private BitmapUtils utils;
+//        private BitmapUtils utils;
+        private MyBitmapUtils utils;
 
         public PhotoAdapter() {
-            utils = new BitmapUtils(mActivity);
-            utils.configDefaultLoadingImage(R.drawable.news_pic_default);
+//            utils = new BitmapUtils(mActivity);
+//            utils.configDefaultLoadingImage(R.drawable.news_pic_default);
+            utils = new MyBitmapUtils();
         }
 
         @Override
