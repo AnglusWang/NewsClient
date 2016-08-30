@@ -16,6 +16,12 @@ import java.net.URL;
  */
 public class NetCacheUtils {
 
+    private LocalCacheUtils mLocalCacheUtils;
+
+    public NetCacheUtils(LocalCacheUtils localCacheUtils) {
+        mLocalCacheUtils = localCacheUtils;
+    }
+
     /**
      * 从网络下载图片
      *
@@ -55,6 +61,8 @@ public class NetCacheUtils {
                 if (url.equals(bindUrl)) {
                     ivPic.setImageBitmap(bitmap);
                     Log.i("onPostExecute: ", "从网络上获取图片。。。");
+
+                    mLocalCacheUtils.setBitmapToLocal(url, bitmap);// 将图片保存在本地
                 }
             }
         }
