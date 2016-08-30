@@ -14,10 +14,12 @@ public class MyBitmapUtils {
 
     private NetCacheUtils mNetCacheUtils;
     private LocalCacheUtils mLocalCacheUtils;
+    private MemoryCacheUtils mMemoryCacheUtils;
 
     public MyBitmapUtils() {
         mLocalCacheUtils = new LocalCacheUtils();
-        mNetCacheUtils = new NetCacheUtils(mLocalCacheUtils);
+        mMemoryCacheUtils = new MemoryCacheUtils();
+        mNetCacheUtils = new NetCacheUtils(mLocalCacheUtils, mMemoryCacheUtils);
     }
 
     public void display(ImageView ivPic, String url) {
@@ -26,16 +28,23 @@ public class MyBitmapUtils {
 
         Bitmap bitmap = null;
         // 从内存读取
+        bitmap = mMemoryCacheUtils.getBitmapForMemory(url);
+        if (bitmap != null) {
+            ivPic.setImageBitmap(bitmap);
+            Log.i("MyBitmapUtils : ", "从内存读取到图片啦...");
+            return;
+        }
 
         // 从(本地)SD卡读取
         bitmap = mLocalCacheUtils.getBitmapFromLocal(url);
         if (bitmap != null) {
             ivPic.setImageBitmap(bitmap);
-            Log.i("MyBitmapUtils : ", "从本地读取图片啦...");
+            Log.i("MyBitmapUtils : ", "从本地读取到图片啦...");
             return;
         }
 
         // 从网络读取
         mNetCacheUtils.getBitmapFromNet(ivPic, url);
+        Log.i("MyBitmapUtils : ", "从网络读取到图片啦...");
     }
 }

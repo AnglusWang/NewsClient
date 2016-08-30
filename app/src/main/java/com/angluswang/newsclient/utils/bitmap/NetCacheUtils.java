@@ -17,9 +17,11 @@ import java.net.URL;
 public class NetCacheUtils {
 
     private LocalCacheUtils mLocalCacheUtils;
+    private MemoryCacheUtils mMemoryCacheUtils;
 
-    public NetCacheUtils(LocalCacheUtils localCacheUtils) {
+    public NetCacheUtils(LocalCacheUtils localCacheUtils, MemoryCacheUtils memoryCacheUtils) {
         mLocalCacheUtils = localCacheUtils;
+        mMemoryCacheUtils = memoryCacheUtils;
     }
 
     /**
@@ -63,6 +65,7 @@ public class NetCacheUtils {
                     Log.i("onPostExecute: ", "从网络上获取图片。。。");
 
                     mLocalCacheUtils.setBitmapToLocal(url, bitmap);// 将图片保存在本地
+                    mMemoryCacheUtils.setBitmapToMemory(url, bitmap);// 将图片保存在内存
                 }
             }
         }
