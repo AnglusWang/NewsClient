@@ -36,7 +36,7 @@ public class MyBitmapUtils {
         }
 
         // 从(本地)SD卡读取
-        bitmap = mLocalCacheUtils.getBitmapFromLocal(url);
+        bitmap =  mLocalCacheUtils.getBitmapFromLocal(url);
         if (bitmap != null) {
             ivPic.setImageBitmap(bitmap);
             Log.i("MyBitmapUtils : ", "从本地读取到图片啦...");

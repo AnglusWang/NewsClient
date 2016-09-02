@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.angluswang.newsclient.R;
+import com.angluswang.newsclient.utils.DensityUtils;
 import com.angluswang.newsclient.utils.PrefUtils;
 
 import java.util.ArrayList;
@@ -71,9 +72,10 @@ public class GuideActivity extends Activity {
             point.setBackgroundResource(R.drawable.shape_point_gray); // 设置引导页默认圆点
 
             LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(10, 10);
+                    new LinearLayout.LayoutParams(DensityUtils.dp2px(this, 10),
+                            DensityUtils.dp2px(this, 10));
             if (i > 0) {
-                params.leftMargin = 10; // 设置圆点间隔
+                params.leftMargin = DensityUtils.dp2px(this, 10); // 设置圆点间隔
             }
             point.setLayoutParams(params); // 设置圆点的大小
 
